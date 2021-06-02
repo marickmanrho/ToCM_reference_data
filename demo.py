@@ -6,3 +6,5 @@ for line in ref.Hestand_2015.figure7.lines:
 
 plt.legend()
 plt.show()
+
+print(ref.Hestand_2015.metadata)

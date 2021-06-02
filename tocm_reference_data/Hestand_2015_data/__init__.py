@@ -9,7 +9,6 @@ metadata = {
 }
 
 fig7_lines = import_figure_from_csv('Hestand_2015_data/Hestand_2015_fig7_monomer.csv')
-
 Figure7 = Figure(name='figure7', lines=fig7_lines)
 
 figures = [Figure7]

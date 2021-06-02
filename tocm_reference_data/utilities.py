@@ -15,11 +15,13 @@ def import_figure_from_csv(path):
 
     Nlines = int(data.shape[1]/2)
 
+    # Make sure array contains floats
     val = data.values[1:]
     val = np.array(val, dtype=np.float)
 
+   
     lines = []
     for i in range(Nlines):
-        lines.append(Line(val[:,2*i],val[:,2*i+1], str(columns[2*i])))
+        lines.append(Line(val[:,2*i],val[:,2*i+1], str(columns[2*i])))  # Each line consists of two columns in the dataframe (X,Y)
     
     return lines
