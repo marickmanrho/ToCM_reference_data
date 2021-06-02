@@ -1,5 +1,3 @@
-__version__ = 0.1
-
 from .base_class import Reference
 
 # Register references
