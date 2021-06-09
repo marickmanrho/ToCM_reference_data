@@ -36,6 +36,9 @@ setup(
     keywords=["scientific", "University of Groningen"],
     install_requires=requirements,
     packages=["tocm_reference_data"],
+    entry_points={
+        "console_scripts": ["tocm_reference_data=tocm_reference_data.manage:manage"]
+    },
     include_package_data=True,
     package_data={"": data_files},
     platforms="any",
