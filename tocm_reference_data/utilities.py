@@ -7,6 +7,10 @@ import pkg_resources
 import json
 import os
 
+import sys
+import pathlib
+from typing import Union, List, Tuple
+
 
 def create_reference(info):
     metadata = import_metadata_from_json(info["metadata"]["file"])
@@ -55,3 +59,63 @@ def import_metadata_from_json(path):
         return metadata[0]
     else:
         return metadata
+
+
+def save_metadata_to_json(data, path):
+    stream = pkg_resources.resource_stream(__name__, path)
+    json.dump(data, stream)
+
+
+def get_user_data_dir(
+    appending_paths: Union[str, List[str], Tuple[str, ...]] = None
+) -> pathlib.Path:
+    """
+    Returns a parent directory path where persistent application data can be stored.
+    Can also append additional paths to the return value automatically.
+
+    Linux: ~/.local/share
+    macOS: ~/Library/Application Support
+    Windows: C:/Users/<USER>/AppData/Roaming
+
+    :param appending_paths: Additional path (str) or paths (List[str], Tuple[str]) to append to return value
+    :type appending_paths: Un
+
+    :return: User Data Path
+    :rtype: str
+    """
+
+    home = pathlib.Path.home()
+
+    system_paths = {
+        "win32": home / "AppData/Roaming",
+        "linux": home / ".local/share",
+        "darwin": home / "Library/Application Support",
+    }
+
+    if sys.platform not in system_paths:
+        raise SystemError(
+            f'Unknown System Platform: {sys.platform}. Only supports {", ".join(list(system_paths.keys()))}'
+        )
+    data_path = system_paths[sys.platform]
+
+    if appending_paths:
+        if isinstance(appending_paths, str):
+            appending_paths = [appending_paths]
+        for path in appending_paths:
+            data_path = data_path / path
+
+    return data_path
+
+
+def get_user_settings_file():
+    data_dir = get_user_data_dir()
+    path = f"{data_dir}/tocm_reference_data/settings.json"
+
+    if not os.path.isdir(f"{data_dir}/tocm_reference_data/"):
+        os.makedirs(f"{data_dir}/tocm_reference_data/")
+
+    if os.path.isfile(path):
+        return path
+    else:
+        with open(path, "w") as file:
+            json.dump({"libraries": []}, file)
