@@ -26,6 +26,8 @@ setup(
     keywords=["scientific", "University of Groningen"],
     install_requires=requirements,
     packages=["tocm_reference_data"],
+    include_package_data=True,
+    package_data={"": ["./*/*.csv", "./*/*.txt", "./*/*.json"]},
     platforms="any",
     classifiers=[
         "Programming Language :: Python :: 3",

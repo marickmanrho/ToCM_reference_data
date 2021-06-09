@@ -1,0 +1,62 @@
+{
+	"id": "http://zotero.org/users/5361723/items/QMECN285",
+	"type": "article-journal",
+	"container-title": "Chemical Science",
+	"DOI": "10.1039/D0SC03110K",
+	"language": "en",
+	"note": "publisher: Royal Society of Chemistry",
+	"source": "pubs.rsc.org",
+	"title": "Multiscale modeling of molecular structure and optical properties of complex supramolecular aggregates",
+	"URL": "https://pubs.rsc.org/en/content/articlelanding/2020/sc/d0sc03110k",
+	"author": [
+		{
+			"family": "S. Bondarenko",
+			"given": "Anna"
+		},
+		{
+			"family": "Patmanidis",
+			"given": "Ilias"
+		},
+		{
+			"family": "Alessandri",
+			"given": "Riccardo"
+		},
+		{
+			"family": "T. Souza",
+			"given": "Paulo C."
+		},
+		{
+			"family": "C. Jansen",
+			"given": "Thomas L."
+		},
+		{
+			"family": "Vries",
+			"given": "Alex H.",
+			"dropping-particle": "de"
+		},
+		{
+			"family": "J. Marrink",
+			"given": "Siewert"
+		},
+		{
+			"family": "Knoester",
+			"given": "Jasper"
+		}
+	],
+	"accessed": {
+		"date-parts": [
+			[
+				"2020",
+				10,
+				16
+			]
+		]
+	},
+	"issued": {
+		"date-parts": [
+			[
+				"2020"
+			]
+		]
+	}
+}
