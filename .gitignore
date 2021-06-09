@@ -1,3 +1,10 @@
+# Figures
+*.png
+*.pdf
+*.eps
+*.jpg
+*.jpeg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
