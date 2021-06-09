@@ -1,6 +1,6 @@
 # Setup for the ToCM reference data package
 #
-# Written using py
+# Written using https://packaging.python.org/tutorials/packaging-projects/
 
 # Most importandly import setuptools
 from setuptools import setup
