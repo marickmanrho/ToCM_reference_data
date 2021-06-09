@@ -4,6 +4,7 @@
 
 # Most importandly import setuptools
 from setuptools import setup
+import os
 
 # Use README.md as long description
 with open("README.md", "r") as file:
@@ -13,9 +14,18 @@ with open("README.md", "r") as file:
 with open("requirements.txt", "r") as file:
     requirements = file.read()
 
+package_location = "tocm_reference_data"
+data_files = []
+for root, dirs, files in os.walk(package_location + "/lib"):
+    for file in files:
+        if file.endswith(".json") or file.endswith(".csv"):
+            data_files.append(
+                os.path.relpath(os.path.join(root, file), package_location)
+            )
+
 setup(
     name="tocm_reference_data",
-    version=0.1,
+    version=0.3,
     url="https://github.com/marickmanrho/tocm_reference_data",
     license="MIT",
     author="Marick Manrho",
@@ -26,6 +36,8 @@ setup(
     keywords=["scientific", "University of Groningen"],
     install_requires=requirements,
     packages=["tocm_reference_data"],
+    include_package_data=True,
+    package_data={"": data_files},
     platforms="any",
     classifiers=[
         "Programming Language :: Python :: 3",
