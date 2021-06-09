@@ -1,10 +1,25 @@
-from .base_class import Line
+from .base_class import Line, Figure, Reference
 
 import pandas as pd
 import numpy as np
 import pandas as pd
 import pkg_resources
 import json
+import os
+
+
+def create_reference(info):
+    metadata = import_metadata_from_json(info["metadata"]["file"])
+
+    figs = []
+    for figure in info["figures"]:
+        figures_type = os.path.splitext(figure["file"])
+        if ".csv" in figures_type:
+            lines = import_figure_from_csv(figure["file"])
+
+        figs.append(Figure(name=figure["name"], lines=lines))
+
+    return Reference(metadata, figs)
 
 
 def import_figure_from_csv(path):
