@@ -25,7 +25,7 @@ for root, dirs, files in os.walk(package_location + "/lib"):
 
 setup(
     name="tocm_reference_data",
-    version=0.3,
+    version=0.4,
     url="https://github.com/marickmanrho/tocm_reference_data",
     license="MIT",
     author="Marick Manrho",
