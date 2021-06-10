@@ -13,6 +13,10 @@ from typing import Union, List, Tuple
 
 
 def create_reference(info):
+    """ Imports content of the folder to a Reference class instance
+
+    All the imports are done using pgk_resources
+    """
     metadata = import_metadata_from_json(info["metadata"]["file"])
 
     figs = []
@@ -20,6 +24,26 @@ def create_reference(info):
         figures_type = os.path.splitext(figure["file"])
         if ".csv" in figures_type:
             lines = import_figure_from_csv(figure["file"])
+
+        figs.append(Figure(name=figure["name"], lines=lines))
+
+    return Reference(metadata, figs)
+
+
+def create_external_reference(info, path):
+    """ Imports content of external folder to a Reference class instance
+
+    All imports are done with json and direct file streams
+    """
+    f = info["metadata"]["file"]
+    with open(f"{path}/{f}", "r") as file:
+        metadata = json.load(file)
+
+    figs = []
+    for figure in info["figures"]:
+        figures_type = os.path.splitext(figure["file"])
+        if ".csv" in figures_type:
+            lines = import_figure_from_external_csv(figure["file"], path)
 
         figs.append(Figure(name=figure["name"], lines=lines))
 
@@ -49,6 +73,27 @@ def import_figure_from_csv(path):
     return lines
 
 
+def import_figure_from_external_csv(file, path):
+    with open(f"{path}/{file}", "r") as f:
+        data = pd.read_csv(f)
+
+    columns = data.columns.values.tolist()
+
+    Nlines = int(data.shape[1] / 2)
+
+    # Make sure array contains floats
+    val = data.values[1:]
+    val = np.array(val, dtype=np.float)
+
+    lines = []
+    for i in range(Nlines):
+        lines.append(
+            Line(val[:, 2 * i], val[:, 2 * i + 1], str(columns[2 * i]))
+        )  # Each line consists of two columns in the dataframe (X,Y)
+
+    return lines
+
+
 def import_metadata_from_json(path):
     # Create a stream relative to package location
     stream = pkg_resources.resource_stream(__name__, path)
@@ -59,11 +104,6 @@ def import_metadata_from_json(path):
         return metadata[0]
     else:
         return metadata
-
-
-def save_metadata_to_json(data, path):
-    stream = pkg_resources.resource_stream(__name__, path)
-    json.dump(data, stream)
 
 
 def get_user_data_dir(
@@ -108,6 +148,10 @@ def get_user_data_dir(
 
 
 def get_user_settings_file():
+    """ Returns the path to the settings file and creates one if it doesn't exsist
+
+    The settings file is stored in the OS dependent data path.
+    """
     data_dir = get_user_data_dir()
     path = f"{data_dir}/tocm_reference_data/settings.json"
 
