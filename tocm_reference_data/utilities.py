@@ -36,7 +36,7 @@ def create_external_reference(info, path):
     All imports are done with json and direct file streams
     """
     f = info["metadata"]["file"]
-    with open(f"{path}/{f}", "r") as file:
+    with open(os.path.join(path, f), "r") as file:
         metadata = json.load(file)
 
     figs = []
@@ -74,7 +74,7 @@ def import_figure_from_csv(path):
 
 
 def import_figure_from_external_csv(file, path):
-    with open(f"{path}/{file}", "r") as f:
+    with open(os.path.join(path, file), "r") as f:
         data = pd.read_csv(f)
 
     columns = data.columns.values.tolist()

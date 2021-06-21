@@ -33,9 +33,11 @@ for lib in settings["libraries"]:
                 with os.scandir(f"{lib}/{folder.name}") as f:
                     for file in f:
                         if file.name.endswith("info.json"):
-                            with open(f"{lib}/{folder.name}/{file.name}", "r") as q:
+                            with open(
+                                os.path.join(lib, folder.name, file.name), "r"
+                            ) as q:
                                 info = json.load(q)
-                            path = f"'{lib}/{folder.name}'"
+                            path = os.path.join(lib, folder.name)
                             exec(
-                                f"{folder.name} = create_external_reference({info}, {path})"
+                                f"{folder.name} = create_external_reference(info, path)"
                             )
